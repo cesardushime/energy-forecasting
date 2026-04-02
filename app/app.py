@@ -14,7 +14,6 @@ Responsibilities:
 - Display historical data, forecasts, and evaluation metrics
 - Highlight anomalies and unusual consumption behavior
 - Enable comparison between different models
-- Present insights in a clear, business-oriented way
 
 Input:
 ------
@@ -82,7 +81,7 @@ def sidebar_controls():
     Sidebar control panel for data selection, model choice, and scenario setup.
     Returns user-selected parameters.
     """
-    st.sidebar.header("🎛️ Control Center")
+    st.sidebar.header("🎛️ Controls")
     
     # Section 1: Data Selection
     st.sidebar.subheader("📊 Dataset")
