@@ -239,7 +239,7 @@ def time_series_visualization(data):
         height=500,
     )
     
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 # ============================================================================
@@ -330,7 +330,7 @@ def forecast_section(data, model_name, forecast_days):
         height=500,
     )
     
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
     
     # Performance metrics
     col1, col2, col3 = st.columns(3)
@@ -396,7 +396,7 @@ def anomaly_detection(data):
         height=400,
     )
     
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
     
     st.info(f"🔍 Found **{len(anomalies)}** anomalies (values > {threshold:.2f} kWh)")
 
@@ -438,7 +438,7 @@ def consumption_breakdown(data):
             height=400,
         )
         
-        st.plotly_chart(fig_pie, use_container_width=True)
+        st.plotly_chart(fig_pie, width="stretch")
     
     with col2:
         # Time-of-day breakdown
@@ -477,9 +477,10 @@ def insights_panel(data):
     insights.append(f"**Peak Usage:** {peak:.2f} kWh – {(peak/mean_consumption):.1f}x average")
     
     # Check for weekend vs weekday patterns (if datetime index available)
-    if hasattr(data.index, 'dayofweek'):
-        weekend_avg = consumption[data.index.dayofweek.isin([5, 6])].mean()
-        weekday_avg = consumption[~data.index.dayofweek.isin([5, 6])].mean()
+    if hasattr(consumption.index, 'dayofweek'):
+        weekend_mask = consumption.index.dayofweek.isin([5, 6])
+        weekend_avg = consumption[weekend_mask].mean()
+        weekday_avg = consumption[~weekend_mask].mean()
         diff_pct = ((weekend_avg - weekday_avg) / weekday_avg) * 100
         insights.append(f"**Weekend Pattern:** {diff_pct:.1f}% {'lower' if diff_pct < 0 else 'higher'} than weekdays")
     
